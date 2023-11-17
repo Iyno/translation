@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace属性：用于指定当前的映射文件和哪个接口进行映射，需要指定接口的文件路径，需要标注包的
+完整路径接口-->
+<mapper namespace="com.japtoch.translation.mapper.TextMapper">
+
+    <resultMap id="TextEntity" type="com.japtoch.translation.entity.TextEntity">
+        <id column="id" property="id"></id>
+        <result column="japanese_question" property="japaneseQuestion"></result>
+        <result column="chinese_question" property="chineseQuestion"></result>
+
+    </resultMap>
+
+    <!-- id属性：表示映射的接口中方法的名称，直接在标签的内容都来编写sql语句-->
+    <!-- useGeneratedKeys属性；表示开启某个字段的值递增（主键设置为递增）
+     keyProperty属性：标签将表中的那个字段作为主键进行递增
+    -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO TranslateInfo(japanese_question,chinese_question)
+        VALUES(#{japaneseQuestion},#{chineseQuestion})
+
+    </insert>
+
+    <select id="findById" resultMap="TextEntity">
+        SELECT * FROM TranslateInfo WHERE id=#{id}
+    </select>
+
+    <update id="updateInfoById">
+        UPDATE TranslateInfo
+        SET
+        japanese_question = #{japaneseQuestion},
+        chinese_question = #{chineseQuestion}
+        WHERE id = ${id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM TranslateInfo WHERE id=#{id}
+    </delete>
+
+
+
+
+
+</mapper>
